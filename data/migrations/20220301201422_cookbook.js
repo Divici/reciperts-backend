@@ -9,6 +9,13 @@ exports.up = async function(knex) {
         tbl.string('ingredient_name',128).notNullable().unique()
         tbl.string('ingredient_unit', 50)
         tbl.float('quantity').notNullable()
+        tbl.integer('recipe_id')
+            .unsigned() 
+            .notNullable()
+            .references('recipe_id')
+            .inTable('recipes')
+            .onDelete('restrict')
+            .onUpdate('restrict')
     })
     .createTable('steps', tbl=>{
         tbl.increments('step_id')

@@ -14,7 +14,7 @@ server.use(cors());
 server.use(express.json());
 
 server.use('/api/auth', authRouter);
-server.use('/api/recipes', restrict, recipesRouter);
+server.use('/api/recipes', recipesRouter); // add: restrict, later
 
 server.use((err, req, res, next) => { // eslint-disable-line
     res.status(err.status || 500).json({
