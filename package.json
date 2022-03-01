@@ -4,9 +4,33 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "server": "nodemon index.js",
+    "migrate": "knex migrate:latest",
+    "rollback": "knex migrate:rollback",
+    "seed": "knex seed:run",
+    "resetdb": "npm run rollback && npm run migrate && npm run seed",
+    "test": "cross-env NODE_ENV=testing jest --verbose --runInBand --silent"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "helmet": "^5.0.2",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.95.14",
+    "sqlite3": "^5.0.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.4.1",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.10.0",
+    "jest": "^27.5.1",
+    "nodemon": "^2.0.15",
+    "supertest": "^6.2.2"
+  }
 }
