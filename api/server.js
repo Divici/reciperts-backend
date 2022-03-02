@@ -13,12 +13,12 @@ server.use(helmet());
 server.use(cors());
 server.use(express.json());
 
+server.use('/api/auth', authRouter);
+server.use('/api/recipes', recipesRouter); // add: restrict, later
+
 server.use('/api/', (_,res)=>{
   res.json({data:"Welcome to my Recipes API"})
 })
-
-server.use('/api/auth', authRouter);
-server.use('/api/recipes', recipesRouter); // add: restrict, later
 
 server.use((err, req, res, next) => { // eslint-disable-line
     res.status(err.status || 500).json({
