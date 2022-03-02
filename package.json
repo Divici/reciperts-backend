@@ -6,11 +6,19 @@
   "scripts": {
     "start": "node index.js",
     "server": "nodemon index.js",
-    "migrate": "knex migrate:latest",
-    "rollback": "knex migrate:rollback",
-    "seed": "knex seed:run",
+    "migrate:dev": "knex migrate:latest",
+    "rollback:dev": "knex migrate:rollback",
+    "seed:dev": "knex seed:run",
     "resetdb": "npm run rollback && npm run migrate && npm run seed",
-    "test": "cross-env NODE_ENV=testing jest --verbose --runInBand --silent"
+    "test": "cross-env NODE_ENV=testing jest --verbose --runInBand --silent",
+    "migrate:prod": "heroku run knex migrate:latest -a reciperts",
+    "rollback:prod": "heroku run knex migrate:rollback -a reciperts",
+    "database:prod": "heroku pg:psql -a reciperts",
+    "seed:prod": "heroku run knex seed:run -a reciperts",
+    "deploy": "git push heroku main"
+  },
+  "engines": {
+    "node": "16.13.2"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +31,7 @@
     "helmet": "^5.0.2",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.14",
+    "pg": "^8.7.3",
     "sqlite3": "^5.0.2"
   },
   "devDependencies": {
