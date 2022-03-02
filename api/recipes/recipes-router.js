@@ -16,10 +16,7 @@ router.get('/:recipe_id', checkRecipeId, (req, res, next) => {
 
 router.post('/', checkRecipePayload, checkRecipeNameUnique, async (req, res, next) => {
     try {
-        const newRecipe = await RecipesModel.create({
-            // name: req.body.name.trim(),
-            // budget: req.body.budget
-        })
+        const newRecipe = await RecipesModel.create(req.body)
         res.status(201).json(newRecipe);
     }
     catch (err){

@@ -20,6 +20,10 @@ const getById = async (recipe_id) => {
     const result = {
         recipe_id: recipeRows[0].recipe_id,
         recipe_name: recipeRows[0].recipe_name,
+        category: recipeRows[0].category,
+        source: recipeRows[0].source,
+        prep_time: recipeRows[0].prep_time,
+        cook_time: recipeRows[0].cook_time,
         ingredients: [],
         steps: []
     }
@@ -51,15 +55,17 @@ const getById = async (recipe_id) => {
 }
 
 const create = async (recipe) => {
-    
+    const [recipe_id] = await db('recipes').insert(recipe);
+    return getById(recipe_id)
 }
 
-const updateById = async (id, recipe) => {
-    
+const updateById = async (recipe_id, recipe) => {
+    await db('recipes').where('recipe_id',recipe_id).update(recipe);
+    return getById(recipe_id)
 }
   
-const deleteById = id => {
-    
+const deleteById = recipe_id => {
+    return db('recipes').where('recipe_id',recipe_id).delete();
 }
 
 module.exports = {

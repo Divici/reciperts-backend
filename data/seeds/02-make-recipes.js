@@ -1,7 +1,7 @@
 const recipes = [
-    {recipe_name: 'Mac n Cheese'},
-    {recipe_name: 'Pasta Bulgogi'},
-    {recipe_name: 'Chicken Curry'},
+    {recipe_name: 'Mac n Cheese', prep_time: 10, cook_time: 30, category: 'lunch', source: 'Uncle James'},
+    {recipe_name: 'Pasta Bulgogi', prep_time: 15, cook_time: 20, category: 'Pasta', source: 'Mama'},
+    {recipe_name: 'Chicken Curry', prep_time: 20, cook_time: 40, category: 'Dinner', source: 'Papa'},
 ]
 
 const ingredients = [

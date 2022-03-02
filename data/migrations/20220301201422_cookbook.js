@@ -3,6 +3,10 @@ exports.up = async function(knex) {
     .createTable('recipes', tbl=>{
         tbl.increments('recipe_id')
         tbl.string('recipe_name',128).notNullable().unique()
+        tbl.float('prep_time')
+        tbl.float('cook_time')
+        tbl.string('category',64)
+        tbl.string('source',128)
     })
     .createTable('ingredients', tbl=>{
         tbl.increments('ingredient_id')
