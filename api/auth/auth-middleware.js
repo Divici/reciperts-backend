@@ -19,13 +19,13 @@ const validatePayload = (req, res, next) => {
     const { username, password } = req.body
 
     if(!username || !password){
-        next({
-            status: 401,
-            message: "username and password required"
-        })
+      next({
+        status: 401,
+        message: "Username and Password required"
+      })
     }
     else{
-        next()
+      next()
     }
 }
 
@@ -45,8 +45,25 @@ const checkUsernameExists = async (req, res, next) => {
     }    
   }
 
+const validateChangePassword = async (req, res, next) => {
+    const { user_id, oldPassword } = req.body 
+    const [user] = await Users.findById(user_id)
+
+    if( !oldPassword ){
+        next()
+    } 
+    else if (user && bcrypt.compareSync(oldPassword, user.password)){
+      next()
+    } 
+    else {
+      next({ status: 401, message: 'Old password incorrect' })
+    }  
+}
+
+
 module.exports = {
     checkUsernameFree,
     validatePayload,
-    checkUsernameExists
+    checkUsernameExists,
+    validateChangePassword
 }
