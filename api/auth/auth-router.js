@@ -26,6 +26,7 @@ router.post('/login', validatePayload, checkUsernameExists, (req, res, next) => 
       status: 200,
       message: `Welcome, ${req.user.username}`,
       token,
+      user_id: req.user.user_id
     })
   }
   else{
