@@ -3,7 +3,7 @@ const User = require('../users/user-model')
 const checkUsernameFree = async (req, res, next) => {
   try {
     const { username } = req.body
-    const user = await Users.get()   
+    const user = await User.get()   
 
     user.map(each => {
       if(each.username === username ) {
