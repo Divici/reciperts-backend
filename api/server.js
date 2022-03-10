@@ -15,7 +15,7 @@ server.use(cors());
 server.use(express.json());
 
 server.use('/api/auth', authRouter);
-server.use('/api/recipes', recipesRouter); // add: restrict, later
+server.use('/api/recipes', restrict, recipesRouter);
 server.use('/api/users', userRouter)
 
 server.use('/api/', (_,res)=>{
