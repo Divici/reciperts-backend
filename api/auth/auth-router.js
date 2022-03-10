@@ -2,24 +2,25 @@ const router = require('express').Router();
 const bcrypt = require('bcryptjs')
 const tokenBuilder = require('./generateToken')
 const {BCRYPT_ROUNDS} = require('../secrets')
-const User = require('./auth-model')
-const {checkUsernameFree, validatePayload, checkUsernameExists, validateChangePassword} = require('./auth-middleware')
+const User = require('../users/user-model')
+const {checkUsernameFree, validatePayload, validateChangePassword} = require('./auth-middleware')
 
-router.post('/register', validatePayload, checkUsernameFree, (req, res, next) => {
-  const {username, password} = req.body
+router.post('/register', validatePayload, checkUsernameFree, async (req, res, next) => {
+  try {
+    const { username, password } = req.body
 
-  const hash = bcrypt.hashSync(password, BCRYPT_ROUNDS)
-  
-  User.add({username, password: hash})
-    .then(user => {
-      res.status(201).json(user)
-    })
-    .catch(err=>{
+    const hash = bcrypt.hashSync(password, BCRYPT_ROUNDS)
+    const newUser = { ...req.body, password: hash }
+    
+    await User.create(newUser)
+    res.status(201).json(`Welcome, ${username}`)
+  } 
+  catch (err) {
       next(err)
-    })
+  }
 });
 
-router.post('/login', validatePayload, checkUsernameExists, (req, res, next) => {
+router.post('/login', validatePayload, (req, res, next) => {
   if(bcrypt.compareSync(req.body.password, req.user.password)){
     const token = tokenBuilder(req.user)
     res.json({

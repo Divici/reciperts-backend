@@ -1,18 +1,20 @@
-const User = require('./auth-model')
+const User = require('../users/user-model')
 
 const checkUsernameFree = async (req, res, next) => {
-    try {
-      const users = await User.findBy({username: req.body.username})
-      if(!users.length){
-        next()
+  try {
+    const { username } = req.body
+    const user = await Users.get()   
+
+    user.map(each => {
+      if(each.username === username ) {
+        next({ status: 400, message: "username taken" })
       }
-      else{
-        next({status: 400, message: "username taken"})
-      }
-    } 
-    catch (error) {
-      next(error)
-    }
+    })
+    next()
+  } 
+  catch (err) {
+    next(err)
+  }
 }
 
 const validatePayload = (req, res, next) => {
@@ -29,25 +31,10 @@ const validatePayload = (req, res, next) => {
     }
 }
 
-const checkUsernameExists = async (req, res, next) => {
-    try {
-      const [user] = await User.findBy({username: req.body.username})
-      if(!user){
-        next({status:401, message: "invalid credentials"})
-      }
-      else{
-        req.user = user
-        next()
-      }
-    } 
-    catch (error) {
-      next(error)
-    }    
-  }
 
 const validateChangePassword = async (req, res, next) => {
     const { user_id, oldPassword } = req.body 
-    const [user] = await Users.findById(user_id)
+    const [user] = await User.getById(user_id)
 
     if( !oldPassword ){
         next()
@@ -64,6 +51,5 @@ const validateChangePassword = async (req, res, next) => {
 module.exports = {
     checkUsernameFree,
     validatePayload,
-    checkUsernameExists,
     validateChangePassword
 }
