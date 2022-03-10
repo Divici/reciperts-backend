@@ -11,7 +11,7 @@ router.post('/register', validatePayload, checkUsernameFree, async (req, res, ne
 
     const hash = bcrypt.hashSync(password, BCRYPT_ROUNDS)
     const newUser = { ...req.body, password: hash }
-    
+
     await User.create(newUser)
     res.status(201).json(`Welcome, ${username}`)
   } 
@@ -20,21 +20,21 @@ router.post('/register', validatePayload, checkUsernameFree, async (req, res, ne
   }
 });
 
-router.post('/login', validatePayload, (req, res, next) => {
-  if(bcrypt.compareSync(req.body.password, req.user.password)){
-    const token = tokenBuilder(req.user)
-    res.json({
-      status: 200,
-      message: `Welcome, ${req.user.username}`,
-      token,
-      user_id: req.user.user_id
-    })
-  }
-  else{
-    next({
-      status:401, 
-      message: 'Invalid credentials'
-    })
+router.post('/login', validatePayload, async (req, res, next) => {
+  try {
+    const { username, password } = req.body
+    const [user] = await User.getBy({ username })
+
+    if(user && bcrypt.compareSync(password, user.password)){
+      const token = tokenBuilder(user)
+      res.json({ message: `Welcome, ${user.username}`, token, user_id: user.user_id })
+    } 
+    else {
+      next({ status: 401, message: 'Invalid credentials' })
+    }
+  } 
+  catch (err) {
+    next(err)
   }
 });
 
