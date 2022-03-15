@@ -41,9 +41,6 @@ exports.checkRecipePayload = (req, res, next) => {
     if(!steps){
       error.message ="Recipe directions are required"
     }
-    else if(!ingredients.quantity){
-      error.message ="Ingredient quantity is needed"
-    }
 
     if(error.message){
       next(error)
