@@ -65,6 +65,38 @@ const create = async (body) => {
     return getById(recipe_id)
 }
 
+const addIngredient = (recipe_id, ingredient) => { 
+    return db('ingredients').insert({
+      ...ingredient,
+      recipe_id
+    })
+      .then(()=>{
+        return db('ingredients as i')
+          .join('recipes as r', 'r.recipe_id', 'i.recipe_id')
+          .select('ingredient_id', 'ingredient_name', 'quantity', 'recipe_name')
+          .where('r.recipe_id', recipe_id)
+      })
+}
+
+const addStep = (recipe_id, step) => { 
+    /*
+      This function adds a step to the recipe with the given `recipe_id`
+      and resolves to _all the steps_ belonging to the given `recipe_id`,
+      including the newly created one.
+    */
+    return db('steps').insert({
+      ...step,
+      recipe_id
+    })
+      .then(()=>{
+        return db('steps as st')
+          .join('recipes as r', 'r.recipe_id', 'st.recipe_id')
+          .select('step_id', 'step_number', 'step_instruction', 'recipe_name')
+          .orderBy('step_number')
+          .where('r.recipe_id', recipe_id)
+      })
+}
+
 const updateById = async (recipe_id, recipe) => {
     await db('recipes').where('recipe_id',recipe_id).update(recipe);
     return getById(recipe_id)
@@ -78,6 +110,8 @@ module.exports = {
     getAll,
     getById,
     create,
+    addIngredient,
+    addStep,
     updateById,
     deleteById,
   }

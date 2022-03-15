@@ -37,9 +37,9 @@ exports.checkRecipeId = async (req, res, next) => {
 exports.checkRecipePayload = (req, res, next) => {
     const error = {status: 400}
     
-    const {recipe_name, ingredients, steps} = req.body;
-    if(!steps){
-      error.message ="Recipe directions are required"
+    const {recipe_name} = req.body;
+    if(!recipe_name){
+      error.message ="Recipe name is required"
     }
 
     if(error.message){
