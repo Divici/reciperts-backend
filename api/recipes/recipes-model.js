@@ -54,12 +54,12 @@ const getById = async (recipe_id) => {
     return result
 }
 
-const create = async (recipe, ingredients, steps) => {
-    const [recipe_id] = await db('recipes').insert(recipe);
-    steps.map(step=>{
+const create = async (body) => {
+    const [recipe_id] = await db('recipes').insert(body.recipe);
+    body.steps.map(step=>{
         await db('steps').insert(step);
     })
-    ingredients.map(ingredient=>{
+    body.ingredients.map(ingredient=>{
         await db('ingredients').insert(ingredient);
     })
     return getById(recipe_id)
