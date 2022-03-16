@@ -3,6 +3,9 @@ const db = require('../../data/dbConfig')
 const getAll = () => {
     return db('recipes')
 }
+async function findById(recipe_id) {
+    return await db('recipes').where('recipe_id', recipe_id)
+}
 
 const getById = async (recipe_id) => {
     const recipeRows = await db('recipes as r')
@@ -104,6 +107,7 @@ const deleteById = recipe_id => {
 module.exports = {
     getAll,
     getById,
+    findById,
     create,
     addIngredient,
     addStep,

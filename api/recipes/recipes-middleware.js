@@ -20,7 +20,7 @@ exports.checkRecipeNameUnique = async (req, res, next) => {
 
 exports.checkRecipeId = async (req, res, next) => {
     try{
-        const recipe = await RecipesModel.getById(req.params.recipe_id)
+        const recipe = await RecipesModel.findById(req.params.recipe_id)
         if(!recipe){
             res.status(404).json({message: 'recipe not found'})
         }
