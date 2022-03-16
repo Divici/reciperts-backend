@@ -10,8 +10,14 @@ router.get('/', (req, res, next) => {
       .catch(next)
   })
   
-router.get('/:recipe_id', checkRecipeId, (req, res, next) => {
-    res.json(req.recipe);
+router.get('/:recipe_id', async (req, res, next) => {
+    try {
+        const recipe = await RecipesModel.findById(req.params.recipe_id)
+        res.json(recipe)
+    } 
+    catch (err) {
+        next(err)
+    }
 })
 
 router.post('/', checkRecipePayload, checkRecipeNameUnique, async (req, res, next) => {
