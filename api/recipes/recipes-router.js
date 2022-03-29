@@ -20,14 +20,14 @@ router.get('/:recipe_id', async (req, res, next) => {
     }
 })
 
-router.post('/', checkRecipePayload, checkRecipeNameUnique,  (req, res, next) => {
-    const recipe = req.body
-
-    RecipesModel.create(recipe)
-    .then(recipe => {
-      res.status(201).json(recipe)
-    })
-    .catch(next)
+router.post('/', checkRecipePayload, checkRecipeNameUnique, async (req, res, next) => {
+    try {
+        const newRecipe = await RecipesModel.create(req.body)
+        res.status(201).json(newRecipe);
+    }
+    catch (err){
+        next()
+    }
 })
 
 router.post('/:recipe_id/ingredients', (req, res, next) => {
