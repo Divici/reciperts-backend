@@ -16,7 +16,7 @@ server.use(express.json());
 
 server.use('/api/auth', authRouter);
 server.use('/api/recipes', recipesRouter);
-server.use('/api/users', restrict, userRouter)
+server.use('/api/users', userRouter)
 
 server.use('/api/', (_,res)=>{
   res.json({data:"Welcome to my Recipes API"})
