@@ -23,7 +23,7 @@ router.get('/:recipe_id', async (req, res, next) => {
 router.post('/', checkRecipePayload, checkRecipeNameUnique,  (req, res, next) => {
     const recipe = req.body
 
-    RecipesModel.add(recipe)
+    RecipesModel.create(recipe)
     .then(recipe => {
       res.status(201).json(recipe)
     })
