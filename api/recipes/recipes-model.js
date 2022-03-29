@@ -57,10 +57,11 @@ const getById = async (recipe_id) => {
     return result
 }
 
-const create = async (recipe) => {
-    const [recipe_id] = await db('recipes').insert(recipe);
-    
-    return getById(recipe_id)
+const create = (recipe) => {
+    return db('recipes').insert(recipe)
+        .then(([recipe_id])=>{
+            return db('recipes').where('recipe_id', recipe_id).first()
+        })
 }
 
 const addIngredient = (recipe_id, ingredient) => { 
