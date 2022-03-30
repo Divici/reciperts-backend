@@ -11,13 +11,13 @@ async function findById(recipe_id) {
 const getById = async (recipe_id) => {
     const recipeRows = await db('recipes as r')
         .join('steps as st', 'r.recipe_id', 'st.recipe_id')
-        .where('r.recipe_id', recipe_id)
+        .where('r.recipe_id', Number(recipe_id))
         .select("r.*", "st.*")
         .orderBy('st.step_number')
 
     const ingredientsRows = await db('recipes as r')
         .join("ingredients as ing", "r.recipe_id", "ing.recipe_id")
-        .where('r.recipe_id', recipe_id)
+        .where('r.recipe_id', Number(recipe_id))
         .select("r.*", "ing.*")
         .orderBy('ing.ingredient_id')
 
@@ -42,19 +42,19 @@ const getById = async (recipe_id) => {
         }
     })
 
-    // if (recipeRows[0].ingredient_id === null) {
-    //     return result;
-    // }
+    if (recipeRows[0].ingredient_id === null) {
+        return result;
+    }
 
-    // for (let ingredient of ingredientsRows) {
-    //     result.ingredients.push({
-    //         ingredient_id: ingredient.ingredient_id,
-    //         ingredient_name: ingredient.ingredient_name,
-    //         ingredient_unit: ingredient.ingredient_unit,
-    //         quantity: ingredient.quantity
-    //     });
-    // }
-    console.log(result);
+    for (let ingredient of ingredientsRows) {
+        result.ingredients.push({
+            ingredient_id: ingredient.ingredient_id,
+            ingredient_name: ingredient.ingredient_name,
+            ingredient_unit: ingredient.ingredient_unit,
+            quantity: ingredient.quantity
+        });
+    }
+    console.log(typeof(Number(recipe_id)));
     return result
 }
 

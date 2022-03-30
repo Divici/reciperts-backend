@@ -12,7 +12,7 @@ router.get('/', (req, res, next) => {
   
 router.get('/:recipe_id', async (req, res, next) => {
     try {
-        const recipe = await RecipesModel.getById(req.params.recipe_id)
+        const recipe = await RecipesModel.getById(Number(req.params.recipe_id))
         res.json(recipe)
     } 
     catch (err) {
