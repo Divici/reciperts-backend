@@ -77,11 +77,16 @@ router.put('/:recipe_id', checkRecipePayload, async (req, res, next) => {
 
 router.delete('/:recipe_id', checkRecipeId, async (req, res, next) => {
     try{
-        await RecipesModel.deleteById(req.params.recipe_id)
-        res.json(req.recipe)
-    }
-    catch(err){
-        next(err)
+        const count = await RecipesModel.deleteById(req.params.recipe_id)
+        if (count > 0) {
+            res.status(204).end();
+        } 
+        else {
+            res.status(404).json({ message: 'Recipe deleted'})
+        }
+    } 
+    catch (error) {
+        res.status(500).json({ message: 'There was an error while attempting to remove that recipe'})
     }
 })
 
