@@ -52,7 +52,7 @@ router.post('/:recipe_id/steps', (req, res, next) => {
       .catch(next)
   })
 
-router.put('/:recipe_id', checkRecipeId, checkRecipePayload, async (req, res, next) => {
+router.put('/:recipe_id', checkRecipePayload, async (req, res, next) => {
     try{
         const updated = await RecipesModel.updateById(req.params.recipe_id, req.body)
         if (updated) {
