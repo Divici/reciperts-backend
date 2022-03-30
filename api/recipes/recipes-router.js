@@ -53,9 +53,20 @@ router.post('/:recipe_id/steps', (req, res, next) => {
   })
 
 router.put('/:recipe_id', checkRecipeId, checkRecipePayload, async (req, res, next) => {
-    const updated = await RecipesModel.updateById(req.params.recipe_id, req.body)
-    res.json(updated)
-    next()
+    try{
+        const updated = await RecipesModel.updateById(req.params.recipe_id, req.body)
+        if (updated) {
+            res.status(200).json(updated)
+        } 
+        else {
+            res.status(404).json({ message: 'That recipe does not exist'})
+        }
+    }
+    catch (error){
+        //next(err)
+        res.status(500).json({ message: 'There was an error while trying to update the recipe'})
+    }
+ 
 });
 
 router.delete('/:recipe_id', checkRecipeId, async (req, res, next) => {
