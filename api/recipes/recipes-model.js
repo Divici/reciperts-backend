@@ -80,15 +80,13 @@ const updateById = (recipe_id, recipe) => {
   
 const deleteById = async recipe_id => {
     
-    await db('recipes as r')
-        .join('steps as st', 'r.recipe_id', 'st.recipe_id')
-        .where('r.recipe_id', recipe_id)
-        .delete("st.*");
+    await db('steps')
+        .where('steps.recipe_id', recipe_id)
+        .delete();
 
-    await db('recipes as r')
-        .join("ingredients as ing", "r.recipe_id", "ing.recipe_id")
-        .where('r.recipe_id', recipe_id)
-        .delete( "ing.*")
+    await db('ingredients')
+        .where('ingredients.recipe_id', recipe_id)
+        .delete()
 
     return await db('recipes')
         .where('recipe_id',recipe_id)
