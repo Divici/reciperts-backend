@@ -11,13 +11,13 @@ async function findById(recipe_id) {
 const getById = async (recipe_id) => {
     const recipeRows = await db('recipes as r')
         .join('steps as st', 'r.recipe_id', 'st.recipe_id')
-        .where('r.recipe_id', Number(recipe_id))
+        .where('r.recipe_id', recipe_id)
         .select("r.*", "st.*")
         .orderBy('st.step_number')
 
     const ingredientsRows = await db('recipes as r')
         .join("ingredients as ing", "r.recipe_id", "ing.recipe_id")
-        .where('r.recipe_id', Number(recipe_id))
+        .where('r.recipe_id', recipe_id)
         .select("r.*", "ing.*")
         .orderBy('ing.ingredient_id')
 

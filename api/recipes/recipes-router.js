@@ -12,11 +12,17 @@ router.get('/', (req, res, next) => {
   
 router.get('/:recipe_id', async (req, res, next) => {
     try {
-        const recipe = await RecipesModel.getById(Number(req.params.recipe_id))
-        res.json(recipe)
+        const recipe = await RecipesModel.getById(req.params.recipe_id)
+        if (recipe) {
+            res.status(200).json(recipe)
+        } 
+        else {
+            res.status(404).json({ message: 'Cannot find requested recipe' });
+        }
     } 
     catch (err) {
-        next(err)
+        //next(err)
+        res.status(500).json({message: 'The recipe could not be retrieved.'})
     }
 })
 
