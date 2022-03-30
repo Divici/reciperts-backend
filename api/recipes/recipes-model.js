@@ -42,19 +42,19 @@ const getById = async (recipe_id) => {
         }
     })
 
-    if (recipeRows[0].ingredient_id === null) {
-        return result;
-    }
+    // if (recipeRows[0].ingredient_id === null) {
+    //     return result;
+    // }
 
-    for (let ingredient of ingredientsRows) {
-        result.ingredients.push({
-            ingredient_id: ingredient.ingredient_id,
-            ingredient_name: ingredient.ingredient_name,
-            ingredient_unit: ingredient.ingredient_unit,
-            quantity: ingredient.quantity
-        });
-    }
-
+    // for (let ingredient of ingredientsRows) {
+    //     result.ingredients.push({
+    //         ingredient_id: ingredient.ingredient_id,
+    //         ingredient_name: ingredient.ingredient_name,
+    //         ingredient_unit: ingredient.ingredient_unit,
+    //         quantity: ingredient.quantity
+    //     });
+    // }
+    console.log(result);
     return result
 }
 
