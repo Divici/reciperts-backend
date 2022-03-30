@@ -3,6 +3,7 @@ const db = require('../../data/dbConfig')
 const getAll = () => {
     return db('recipes')
 }
+
 async function findById(recipe_id) {
     return await db('recipes').where('recipe_id', recipe_id)
 }
@@ -96,13 +97,16 @@ const addStep = (recipe_id, step) => {
       })
 }
 
-const updateById = async (recipe_id, recipe) => {
-    await db('recipes').where('recipe_id',recipe_id).update(recipe);
-    return getById(recipe_id)
+const updateById = (recipe_id, recipe) => {
+    return db('recipes')
+        .where('recipe_id',recipe_id)
+        .update(recipe);
 }
   
 const deleteById = recipe_id => {
-    return db('recipes').where('recipe_id',recipe_id).delete();
+    return db('recipes')
+        .where('recipe_id',recipe_id)
+        .delete();
 }
 
 module.exports = {
