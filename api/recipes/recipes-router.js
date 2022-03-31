@@ -7,7 +7,7 @@ router.get('/', (req, res, next) => {
     res.json({message: "Welcome. Please sign in"})
   })
   
-router.get('/:user_id/:recipe_id', restrict, async (req, res, next) => {
+router.get('/:recipe_id', restrict, async (req, res, next) => {
     try {
         const recipe = await RecipesModel.getById(req.params.recipe_id)
         if (recipe) {
@@ -23,7 +23,7 @@ router.get('/:user_id/:recipe_id', restrict, async (req, res, next) => {
     }
 })
 
-router.post('/:user_id', restrict, checkRecipePayload, checkRecipeNameUnique, async (req, res, next) => {
+router.post('/', restrict, checkRecipePayload, checkRecipeNameUnique, async (req, res, next) => {
     try {
         const newRecipe = await RecipesModel.create(req.body)
         res.status(201).json(newRecipe);
@@ -33,7 +33,7 @@ router.post('/:user_id', restrict, checkRecipePayload, checkRecipeNameUnique, as
     }
 })
 
-router.post('/:user_id/:recipe_id/ingredients', restrict, (req, res, next) => {
+router.post('/:recipe_id/ingredients', restrict, (req, res, next) => {
     const ingredient = req.body
     const { recipe_id } = req.params
   
@@ -44,7 +44,7 @@ router.post('/:user_id/:recipe_id/ingredients', restrict, (req, res, next) => {
       .catch(next)
   })
 
-router.post('/:user_id/:recipe_id/steps', restrict, (req, res, next) => {
+router.post('/:recipe_id/steps', restrict, (req, res, next) => {
     const step = req.body
     const { recipe_id } = req.params
   
@@ -55,7 +55,7 @@ router.post('/:user_id/:recipe_id/steps', restrict, (req, res, next) => {
       .catch(next)
   })
 
-router.put('/:user_id/:recipe_id', restrict, checkRecipePayload, async (req, res, next) => {
+router.put('/:recipe_id', restrict, checkRecipePayload, async (req, res, next) => {
     try{
         const updated = await RecipesModel.updateById(req.params.recipe_id, req.body)
         if (updated) {
@@ -72,7 +72,7 @@ router.put('/:user_id/:recipe_id', restrict, checkRecipePayload, async (req, res
  
 });
 
-router.delete('/:user_id/:recipe_id', restrict, checkRecipeId, async (req, res, next) => {
+router.delete('/:recipe_id', restrict, checkRecipeId, async (req, res, next) => {
     try{
         const count = await RecipesModel.deleteById(req.params.recipe_id)
         if (count > 0) {
