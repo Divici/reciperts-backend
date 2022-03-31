@@ -54,8 +54,8 @@ exports.checkRecipePayload = (req, res, next) => {
 
   exports.checkUserId = async (req, res, next) => {
     try{
-        const [user] = await UsersModel.getBy(req.params.user_id)
-        if(user.user_id !== req.params.user_id){
+        const [user] = await UsersModel.getById(req.params.user_id)
+        if(user.user_id !== Number(req.params.user_id)){
             res.status(401).json({message: 'User does not have valid credentials'})
         }
         else{
