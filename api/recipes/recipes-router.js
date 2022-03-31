@@ -1,16 +1,12 @@
 const router = require('express').Router()
 const RecipesModel = require('./recipes-model')
-const {checkRecipeNameUnique, checkRecipeId, checkRecipePayload} = require('./recipes-middleware')
+const {checkRecipeNameUnique, checkRecipeId, checkRecipePayload, checkUserId} = require('./recipes-middleware')
 
 router.get('/', (req, res, next) => {
-    RecipesModel.getAll()
-      .then(recipes => {
-        res.json(recipes)
-      })
-      .catch(next)
+    res.json({message: "Welcome. Please sign in"})
   })
   
-router.get('/:recipe_id', async (req, res, next) => {
+router.get('/:user_id/:recipe_id', checkUserId, async (req, res, next) => {
     try {
         const recipe = await RecipesModel.getById(req.params.recipe_id)
         if (recipe) {

@@ -1,5 +1,6 @@
 const db = require('../../data/dbConfig')
 const RecipesModel = require('./recipes-model')
+const UsersModel = require('../users/user-model')
 
 exports.checkRecipeNameUnique = async (req, res, next) => {
     try {
@@ -50,3 +51,18 @@ exports.checkRecipePayload = (req, res, next) => {
       next()
     }
   }
+
+  exports.checkUserId = async (req, res, next) => {
+    try{
+        const [user] = await UsersModel.getBy(req.params.user_id)
+        if(user.user_id !== req.params.user_id){
+            res.status(401).json({message: 'User does not have valid credentials'})
+        }
+        else{
+            next()
+        }
+    }
+    catch (err){
+        res.status(500).json({message: 'problem finding user'})
+    }
+}
