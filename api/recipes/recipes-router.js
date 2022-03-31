@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const RecipesModel = require('./recipes-model')
 const restrict = require('../middleware/restricted')
-const {checkRecipeNameUnique, checkRecipeId, checkRecipePayload, checkUserId} = require('./recipes-middleware')
+const {checkRecipeNameUnique, checkRecipeId, checkRecipePayload} = require('./recipes-middleware')
 
 router.get('/', (req, res, next) => {
     res.json({message: "Welcome. Please sign in"})
