@@ -1,12 +1,13 @@
 const router = require('express').Router()
 const RecipesModel = require('./recipes-model')
+const restrict = require('../middleware/restricted')
 const {checkRecipeNameUnique, checkRecipeId, checkRecipePayload, checkUserId} = require('./recipes-middleware')
 
 router.get('/', (req, res, next) => {
     res.json({message: "Welcome. Please sign in"})
   })
   
-router.get('/:user_id/:recipe_id', checkUserId, async (req, res, next) => {
+router.get('/:user_id/:recipe_id', restrict, async (req, res, next) => {
     try {
         const recipe = await RecipesModel.getById(req.params.recipe_id)
         if (recipe) {
