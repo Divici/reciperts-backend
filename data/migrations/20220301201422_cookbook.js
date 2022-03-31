@@ -7,7 +7,7 @@ exports.up = async function(knex) {
       })
     .createTable('recipes', tbl=>{
         tbl.increments('recipe_id')
-        tbl.string('recipe_name',128).notNullable().unique()
+        tbl.string('recipe_name',128).notNullable()
         tbl.float('prep_time')
         tbl.float('cook_time')
         tbl.string('category',64)
@@ -22,9 +22,9 @@ exports.up = async function(knex) {
     })
     .createTable('ingredients', tbl=>{
         tbl.increments('ingredient_id')
-        tbl.string('ingredient_name',128).notNullable().unique()
+        tbl.string('ingredient_name',128).notNullable()
         tbl.string('ingredient_unit', 50)
-        tbl.float('quantity').notNullable()
+        tbl.float('quantity')
         tbl.integer('recipe_id')
             .unsigned() 
             .notNullable()

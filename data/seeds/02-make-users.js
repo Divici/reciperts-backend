@@ -1,6 +1,5 @@
 const users = [
-    {username: 'David', password: '12345'},
-    {username: 'Paul', password: 'password'}
+    {username: 'Test', password: 'Testing12345'}
 ]
 
 exports.seed = async function(knex) {
