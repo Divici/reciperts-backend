@@ -33,28 +33,6 @@ router.post('/', restrict, checkRecipePayload, checkRecipeNameUnique, async (req
     }
 })
 
-router.post('/:recipe_id/ingredients', restrict, (req, res, next) => {
-    const ingredient = req.body
-    const { recipe_id } = req.params
-  
-    RecipesModel.addIngredient(recipe_id, ingredient)
-      .then(allIngredients => {
-        res.status(201).json(allIngredients)
-      })
-      .catch(next)
-  })
-
-router.post('/:recipe_id/steps', restrict, (req, res, next) => {
-    const step = req.body
-    const { recipe_id } = req.params
-  
-    RecipesModel.addStep(recipe_id, step)
-      .then(allSteps => {
-        res.status(201).json(allSteps)
-      })
-      .catch(next)
-  })
-
 router.put('/:recipe_id', restrict, checkRecipePayload, async (req, res, next) => {
     try{
         const updated = await RecipesModel.updateById(req.params.recipe_id, req.body)

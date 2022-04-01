@@ -1,6 +1,5 @@
 const db = require('../../data/dbConfig')
 const RecipesModel = require('./recipes-model')
-const UsersModel = require('../users/user-model')
 
 exports.checkRecipeNameUnique = async (req, res, next) => {
     try {
