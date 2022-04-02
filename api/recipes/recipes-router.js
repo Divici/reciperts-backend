@@ -3,7 +3,7 @@ const RecipesModel = require('./recipes-model')
 const restrict = require('../middleware/restricted')
 const {checkRecipeNameUnique, checkRecipeId, checkRecipePayload} = require('./recipes-middleware')
 
-router.get('/', (req, res, next) => {
+router.get('/', async (req, res, next) => {
     //res.json({message: "Welcome. Please sign in"})
     try {
         const recipes = await RecipesModel.getAll()
