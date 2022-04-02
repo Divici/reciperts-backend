@@ -13,11 +13,11 @@ const getById = async (recipe_id) => {
         .where('recipe_id', recipe_id)
 }
 
-const create = (recipe) => {
-    return db('recipes').insert(recipe)
-        .then(([recipe_id])=>{
-            return db('recipes').where('recipe_id', recipe_id).first()
-        })
+const create = async (recipe) => {
+    const [recipe_id] = await db('recipes').insert(recipe, 'recipe_id')
+    return db('recipes')
+    .where({ recipe_id })
+    .first()
 }
 
 const updateById = (recipe_id, recipe) => {
