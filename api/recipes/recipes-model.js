@@ -2,6 +2,7 @@ const db = require('../../data/dbConfig')
 
 const getAll = () => {
     return db('recipes')
+        .select('*')
 }
 
 async function findById(recipe_id) {

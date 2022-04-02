@@ -4,17 +4,17 @@ const restrict = require('../middleware/restricted')
 const {checkRecipeNameUnique, checkRecipeId, checkRecipePayload} = require('./recipes-middleware')
 
 router.get('/', (req, res, next) => {
-    res.json({message: "Welcome. Please sign in"})
-    // try {
-    //     const recipes = await RecipesModel.getAll()
-    //     res.status(200).json(recipes)
-    //   } 
-    // catch (error) {
-    //     console.log(error)
-    //     res.status(500).json({
-    //         message: 'An error occurred while trying to retrieve recipes'
-    //     })
-    //   }
+    //res.json({message: "Welcome. Please sign in"})
+    try {
+        const recipes = await RecipesModel.getAll()
+        res.status(200).json(recipes)
+      } 
+    catch (error) {
+        console.log(error)
+        res.status(500).json({
+            message: 'An error occurred while trying to retrieve recipes'
+        })
+      }
   })
   
 router.get('/:recipe_id', async (req, res, next) => {
