@@ -15,10 +15,8 @@ const getById = async (recipe_id) => {
 }
 
 const create = async (recipe) => {
-    const [recipe_id] = await db('recipes').insert(recipe, 'recipe_id')
-    return db('recipes')
-    .where({ recipe_id })
-    .first()
+    await db('recipes').insert(recipe)
+    return recipe
 }
 
 const updateById = (recipe_id, recipe) => {

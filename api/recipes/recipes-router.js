@@ -39,8 +39,7 @@ router.post('/', async (req, res, next) => {
         res.status(201).json(newRecipe);
     }
     catch (err){
-        //next()
-        res.status(500).json({ message: 'There was an error while trying to add the recipe'})
+        next(err)
     }
 })
 
