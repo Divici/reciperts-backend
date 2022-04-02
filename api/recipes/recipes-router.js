@@ -33,13 +33,14 @@ router.get('/:recipe_id', async (req, res, next) => {
     }
 })
 
-router.post('/', checkRecipePayload, checkRecipeNameUnique, async (req, res, next) => {
+router.post('/', async (req, res, next) => {
     try {
         const newRecipe = await RecipesModel.create(req.body)
         res.status(201).json(newRecipe);
     }
     catch (err){
-        next()
+        //next()
+        res.status(500).json({ message: 'There was an error while trying to add the recipe'})
     }
 })
 
