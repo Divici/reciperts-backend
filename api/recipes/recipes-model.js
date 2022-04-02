@@ -11,7 +11,6 @@ async function findById(recipe_id) {
 const getById = async (recipe_id) => {
     return await db('recipes')
         .where('recipe_id', recipe_id)
-        .first()
 }
 
 const create = (recipe) => {
