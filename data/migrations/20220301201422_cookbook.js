@@ -12,7 +12,7 @@ exports.up = async function(knex) {
         tbl.string('cook_time')
         tbl.string('category',64)
         tbl.string('source',128)
-        tbl.text('ingredients').notNullable()
+        tbl.text('ingredients')
         tbl.text('steps')
         tbl.integer('user_id')
             .unsigned()
