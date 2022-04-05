@@ -10,8 +10,13 @@ const userRouter = require('./users/user-router')
 
 const server = express();
 
+const corsOptions = {
+  origin: 'https://reciperts.vercel.app/',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
 server.use(helmet());
-server.use(cors());
+server.use(cors(corsOptions));
 server.use(express.json());
 
 server.use('/api/auth', authRouter);
