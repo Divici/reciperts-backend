@@ -10,9 +10,15 @@ const userRouter = require('./users/user-router')
 
 const server = express();
 
+const whitelist = ['https://reciperts.vercel.app', 'http://localhost:3000', 'http://localhost:9000']
 const corsOptions = {
-  origin: 'https://reciperts.vercel.app/',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
 }
 
 server.use(helmet());
