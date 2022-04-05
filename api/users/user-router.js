@@ -1,8 +1,5 @@
-const cors = require('cors')
 const router = require('express').Router()
 const Users = require('./user-model')
-
-router.options('*', cors())
 
 router.get('/', async (req, res, next) => {
     try {

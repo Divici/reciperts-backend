@@ -1,10 +1,7 @@
-const cors = require('cors')
 const router = require('express').Router()
 const RecipesModel = require('./recipes-model')
 const restrict = require('../middleware/restricted')
 const {checkRecipeNameUnique, checkRecipeId, checkRecipePayload} = require('./recipes-middleware')
-
-router.options('*', cors())
 
 router.get('/', async (req, res, next) => {
     //res.json({message: "Welcome. Please sign in"})
