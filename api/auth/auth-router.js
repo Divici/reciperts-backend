@@ -1,9 +1,12 @@
 const router = require('express').Router();
+const cors = require('cors')
 const bcrypt = require('bcryptjs')
 const tokenBuilder = require('./generateToken')
 const {BCRYPT_ROUNDS} = require('../secrets')
 const User = require('../users/user-model')
 const {checkUsernameFree, validatePayload, validateChangePassword} = require('./auth-middleware')
+
+router.options('*', cors())
 
 router.post('/register', validatePayload, checkUsernameFree, async (req, res, next) => {
   try {
