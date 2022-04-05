@@ -13,7 +13,7 @@ const server = express();
 const whitelist = ['https://reciperts.vercel.app', 'http://localhost:3000', 'http://localhost:9000']
 const corsOptions = {
   origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
       callback(null, true)
     } else {
       callback(new Error('Not allowed by CORS'))
